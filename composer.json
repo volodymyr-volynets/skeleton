@@ -1,0 +1,22 @@
+{
+	"name": "Numbers/Skeleton",
+	"description": "Skeleton Application for Numbers Framework",
+	"require": {
+		"php": ">=7.0.0"
+	},
+	"scripts": {
+		"post-create-project-cmd": [
+			"post_install_script.php"
+		]
+	},
+	"authors": [
+		{
+			"name": "Volodymyr Volynets",
+			"email": "volodymyr.volynets@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=7.0.0"
+	},
+	"license": "Apache License 2.0"
+}
