@@ -1,5 +1,5 @@
 {
-	"name": "Numbers/Skeleton",
+	"name": "numbers/skeleton",
 	"description": "Skeleton Application for Numbers Framework",
 	"require": {
 		"php": ">=7.0.0"
