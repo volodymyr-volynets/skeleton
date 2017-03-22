@@ -15,8 +15,5 @@
 			"email": "volodymyr.volynets@gmail.com"
 		}
 	],
-	"require": {
-		"php": ">=7.0.0"
-	},
 	"license": "Apache License 2.0"
 }
