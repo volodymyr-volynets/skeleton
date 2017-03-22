@@ -3,9 +3,10 @@
 # Installation Instructions
 1) Create a new project:
 
-	composer create-project numbers/skeleton [project directory]
+	composer create-project --no-install numbers/skeleton [project directory]
 
 	Note: composer must be installed on your system.
+	Note: we skip vendor directory here by using --no-install option;
 
 2) Setup apache:
 
