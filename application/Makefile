@@ -4,101 +4,96 @@ all: deployment_production
 
 build:
 	# building application
-	@-$(MAKE) git;
-	@-$(MAKE) permissions;
-	@-if test -d "libraries/vendor/numbers/framework/system/managers"; \
-	then \
-		$(MAKE) dep_commit ; \
-	fi
-	@-$(MAKE) composer;
-	@-$(MAKE) permissions;
-	@-$(MAKE) deployment_production;
-
-git:
-	# initializing git repository if not exists
 	@-if ! test -d ".git"; \
 	then \
 		git init; \
 	fi;
+	@-$(MAKE) permissions;
+	# run composer for the first time
+	@-if ! test -d "libraries/vendor/numbers/framework/System/Managers"; \
+	then \
+		$(MAKE) composer; \
+	fi
+	# process dependencies
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php dependency commit 0 1;
+	# run composer for the second time
+	@-$(MAKE) composer;
+	# granting permissions
+	@-$(MAKE) permissions;
+#	@-$(MAKE) deployment_production;
 
 permissions:
-	# granting permissions
+	@# granting permissions
 	@-chmod -R 0777 $(shell pwd);
-	@-chmod -R 0777 $(shell pwd)/../deployed;
+#	@-chmod -R 0777 $(shell pwd)/../deployed;
 
 composer:
 	# running composer and the deleting submodules
 	@-cd libraries; \
 	rm -r vendor; \
 	composer.phar update; \
-	find vendor -type d -name ".git" -exec rm -rf {} \;
+	find vendor -type d -name ".git" | xargs rm -rf \;
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Dependencies -----------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 dependency_test:
 	@# testing dependencies in test mode
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php dependency test $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php dependency test $(verbose);
 
 dependency_commit:
 	@# commit dependency changes
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php dependency commit $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php dependency commit $(verbose);
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Schema & migration commands --------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 schema_test:
 	@# test for changes between code and database
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php schema test $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php schema test $(verbose);
 
 schema_commit:
 	@# commit changes from code to database
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php schema commit $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php schema commit $(verbose);
 
 schema_drop:
 	@# drop schema in database (empty database)
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php schema drop $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php schema drop $(verbose);
 
 migration_code_test:
 	@# test for changes between code and saved migrations
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php migration_code test $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_code test $(verbose);
 
 migration_code_commit:
 	@# commit changes from code to migrations
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php migration_code commit $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_code commit $(verbose);
 
 migration_code_drop:
 	@# drop migrations
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php migration_code drop $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_code drop $(verbose);
 
 migration_db_test:
 	@# test migration between code and database
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php migration_db test $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_db test $(verbose);
 
 migration_db_commit:
 	@# commit changes from migrations to database
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php migration_db commit $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_db commit $(verbose);
 
 migration_db_rollback:
 	@# rollback to particular migration
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php migration_db rollback $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_db rollback $(verbose);
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Deployment commands ----------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 deployment_production:
 	@# deploying code in production mode
-	@-if test -d "libraries/vendor/numbers/framework/system/managers"; \
-	then \
-		php libraries/vendor/numbers/framework/system/managers/manager.php deployment production ; \
-	fi;
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php deployment production $(verbose);
 
 deployment_development:
 	@# deploying code in development mode
-	@-if test -d "libraries/vendor/numbers/framework/system/managers"; \
-	then \
-		php libraries/vendor/numbers/framework/system/managers/manager.php deployment development ; \
-	fi;
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php deployment development $(verbose);
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Unit testing commands ------------------------------------------------------------------------------------------------------------------
@@ -117,7 +112,7 @@ unit_testing_submodules:
 development_test:
 	@# use this if you need to develop a test php script and run it from command line
 	@# replace it to run your custom script and use test.php as a template
-	@-php libraries/vendor/numbers/framework/system/managers/test.php;
+	@-php libraries/vendor/numbers/framework/System/Managers/test.php;
 
 development_symlink_framework:
 	@# building dev symlinks, so we can commit changes right in proper git repository
@@ -133,7 +128,7 @@ development_symlink_framework:
 # --------------------------------------------------------------------------------------------------------------------------------------------
 cache_drop:
 	@# reset caches
-	@-php libraries/vendor/numbers/framework/system/managers/manager.php cache drop $(verbose);
+	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php cache drop $(verbose);
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Help commands --------------------------------------------------------------------------------------------------------------------------
