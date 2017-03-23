@@ -10,4 +10,4 @@ require('../libraries/vendor/numbers/framework/application.php');
 spl_autoload_register(array('application', 'autoloader'));
 
 // running application
-application::run();
+Application::run();

@@ -9,6 +9,6 @@ class unit_tests_application extends PHPUnit_Framework_TestCase {
 		// step 1 - class exists
 		$this->assertEquals(true, class_exists('application'));
 		// step 2 - if application has been run we should have an environment
-		$this->assertContains(application::get('environment'), ['production', 'staging', 'testing', 'development']);
+		$this->assertContains(Application::get('environment'), ['production', 'staging', 'testing', 'development']);
 	}
 }

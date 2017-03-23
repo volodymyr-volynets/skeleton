@@ -9,7 +9,7 @@ class controller_index extends object_controller {
 	];
 
 	public function action_index() {
-		echo application::get('environment');
+		echo Application::get('environment');
 		echo "<h3>This is index controller</h3>";
 	}
 }
