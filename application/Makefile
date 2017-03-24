@@ -119,8 +119,8 @@ development_symlink_framework:
 	@-for f in $(shell cd /home/numbers; ls); \
 	do \
 	    echo " -> $$f"; \
-	    rm -r libraries/vendor/numbers/$$f ; \
-	    ln -s /home/numbers/$$f libraries/vendor/numbers/$$f ; \
+	    rm -r libraries/vendor/Numbers/$$f ; \
+	    ln -s /home/numbers/$$f libraries/vendor/Numbers/$$f ; \
 	done;
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
