@@ -1,5 +1,12 @@
 {
 	"require": {
-		"numbers/framework": "dev-master"
+		"numbers/framework": "dev-master",
+		"oomphinc/composer-installers-extender": "~1.0"
+	},
+	"extra": {
+		"installer-types": ["library"],
+		"installer-paths": {
+			"vendor/Numbers/Framework/": ["numbers/framework"]
+		}
 	}
 }

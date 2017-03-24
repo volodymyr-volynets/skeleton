@@ -10,12 +10,12 @@ build:
 	fi;
 	@-$(MAKE) permissions;
 	# run composer for the first time
-	@-if ! test -d "libraries/vendor/numbers/framework/System/Managers"; \
+	@-if ! test -d "libraries/vendor/Numbers/Framework/System/Managers"; \
 	then \
 		$(MAKE) composer; \
 	fi
 	# process dependencies
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php dependency commit 0 1;
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit 0 1;
 	# run composer for the second time
 	@-$(MAKE) composer;
 	# granting permissions
@@ -39,61 +39,61 @@ composer:
 # ----------------------------------------------------------------------------------------------------------------
 dependency_test:
 	@# testing dependencies in test mode
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php dependency test $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency test $(verbose);
 
 dependency_commit:
 	@# commit dependency changes
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php dependency commit $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit $(verbose);
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Schema & migration commands --------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 schema_test:
 	@# test for changes between code and database
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php schema test $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php schema test $(verbose);
 
 schema_commit:
 	@# commit changes from code to database
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php schema commit $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php schema commit $(verbose);
 
 schema_drop:
 	@# drop schema in database (empty database)
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php schema drop $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php schema drop $(verbose);
 
 migration_code_test:
 	@# test for changes between code and saved migrations
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_code test $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_code test $(verbose);
 
 migration_code_commit:
 	@# commit changes from code to migrations
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_code commit $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_code commit $(verbose);
 
 migration_code_drop:
 	@# drop migrations
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_code drop $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_code drop $(verbose);
 
 migration_db_test:
 	@# test migration between code and database
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_db test $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_db test $(verbose);
 
 migration_db_commit:
 	@# commit changes from migrations to database
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_db commit $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_db commit $(verbose);
 
 migration_db_rollback:
 	@# rollback to particular migration
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php migration_db rollback $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_db rollback $(verbose);
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Deployment commands ----------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------
 deployment_production:
 	@# deploying code in production mode
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php deployment production $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production $(verbose);
 
 deployment_development:
 	@# deploying code in development mode
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php deployment development $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment development $(verbose);
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Unit testing commands ------------------------------------------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ unit_testing_submodules:
 development_test:
 	@# use this if you need to develop a test php script and run it from command line
 	@# replace it to run your custom script and use test.php as a template
-	@-php libraries/vendor/numbers/framework/System/Managers/test.php;
+	@-php libraries/vendor/Numbers/Framework/System/Managers/test.php;
 
 development_symlink_framework:
 	@# building dev symlinks, so we can commit changes right in proper git repository
@@ -128,7 +128,7 @@ development_symlink_framework:
 # --------------------------------------------------------------------------------------------------------------------------------------------
 cache_drop:
 	@# reset caches
-	@-php libraries/vendor/numbers/framework/System/Managers/Manager.php cache drop $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php cache drop $(verbose);
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Help commands --------------------------------------------------------------------------------------------------------------------------
