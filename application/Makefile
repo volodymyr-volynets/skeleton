@@ -31,7 +31,7 @@ composer:
 	# running composer and the deleting submodules
 	@-cd libraries; \
 	rm -r vendor; \
-	composer.phar update; \
+	composer.phar update --prefer-source; \
 	find vendor -type d -name ".git" | xargs rm -rf \;
 
 # ----------------------------------------------------------------------------------------------------------------
