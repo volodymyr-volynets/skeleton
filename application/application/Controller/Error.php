@@ -1,13 +1,14 @@
 <?php
 
-class controller_error extends object_controller {
+namespace Controller;
+class Error extends \Object\Controller {
 
 	public $title = 'Error Handler';
 
 	/**
 	 * Error action
 	 */
-	public function action_error() {
+	public function actionError() {
 		$result = '';
 		// show human readable messages first
 		if (count(\Object\Error\Base::$errors) > 0) {
@@ -20,12 +21,12 @@ class controller_error extends object_controller {
 				}
 			}
 			if (empty($messages)) {
-				$messages[] = i18n(null, 'Internal Server Error: 500');
+				$messages[] = \I18n(null, 'Internal Server Error: 500');
 			}
-			$result.= Html::message(['type' => 'danger', 'options' => $messages]);
+			$result.= \Html::message(['type' => 'danger', 'options' => $messages]);
 		}
 		// show full description second
-		if (Application::get('flag.error.show_full') && count(\Object\Error\Base::$errors) > 0) {
+		if (\Application::get('flag.error.show_full') && count(\Object\Error\Base::$errors) > 0) {
 			foreach (\Object\Error\Base::$errors as $k => $v) {
 				$result.= '<h3>' . \Object\Error\Base::$error_codes[$v['errno']] . ' (' . $v['errno'] . ') - ' . implode('<br/>', $v['error']) . '</h3>';
 				$result.= '<br />';
