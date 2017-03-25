@@ -1,4 +1,4 @@
-.PHONY: all build dep_test dep_commit permissions
+.PHONY: all build dependency_test dependency_commit deployment_production deployment_development
 
 all: deployment_production
 
@@ -8,7 +8,8 @@ build:
 	then \
 		git init; \
 	fi;
-	@-$(MAKE) permissions;
+	@# granting permissions
+	@-chmod -R 0777 $(shell pwd);
 	# run composer for the first time
 	@-if ! test -d "libraries/vendor/Numbers/Framework/System/Managers"; \
 	then \
@@ -19,13 +20,9 @@ build:
 	# run composer for the second time
 	@-$(MAKE) composer;
 	# granting permissions
-	@-$(MAKE) permissions;
-#	@-$(MAKE) deployment_production;
-
-permissions:
-	@# granting permissions
 	@-chmod -R 0777 $(shell pwd);
-#	@-chmod -R 0777 $(shell pwd)/../deployed;
+	# deploying code in production mode
+	@-$(MAKE) deployment_production;
 
 composer:
 	# running composer and the deleting submodules
@@ -44,6 +41,17 @@ dependency_test:
 dependency_commit:
 	@# commit dependency changes
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit $(verbose);
+
+# ----------------------------------------------------------------------------------------------------------------
+# --- Deployment commands ----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------
+deployment_production:
+	@# deploying code in production mode
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production $(verbose);
+
+deployment_development:
+	@# deploying code in development mode
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment development $(verbose);
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Schema & migration commands --------------------------------------------------------------------------------
@@ -83,17 +91,6 @@ migration_db_commit:
 migration_db_rollback:
 	@# rollback to particular migration
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_db rollback $(verbose);
-
-# ----------------------------------------------------------------------------------------------------------------
-# --- Deployment commands ----------------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------------------------------------
-deployment_production:
-	@# deploying code in production mode
-	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production $(verbose);
-
-deployment_development:
-	@# deploying code in development mode
-	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment development $(verbose);
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Unit testing commands ------------------------------------------------------------------------------------------------------------------
