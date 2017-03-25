@@ -22,7 +22,7 @@ build:
 	# granting permissions
 	@-chmod -R 0777 $(shell pwd);
 	# deploying code in production mode
-	@-$(MAKE) deployment_production;
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production 0 1;
 
 composer:
 	# running composer and the deleting submodules
