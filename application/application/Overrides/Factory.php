@@ -9,6 +9,6 @@ class Factory extends \Object\Override\Data {
 	 * @var array
 	 */
 	public static $data = [
-		//'object_validator_uppercase' => 'overrides_validator_uppercase'
+		//'\Object\Validator\UpperCase' => 'overrides_validator_uppercase'
 	];
 }

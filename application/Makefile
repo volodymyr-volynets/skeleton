@@ -9,7 +9,7 @@ build:
 		git init; \
 	fi;
 	@# granting permissions
-	@-chmod -R 0777 $(shell pwd);
+	@-$(MAKE) permissions;
 	# run composer for the first time
 	@-if ! test -d "libraries/vendor/Numbers/Framework/System/Managers"; \
 	then \
@@ -19,8 +19,8 @@ build:
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit 0 1;
 	# run composer for the second time
 	@-$(MAKE) composer;
-	# granting permissions
-	@-chmod -R 0777 $(shell pwd);
+	@# granting permissions
+	@-$(MAKE) permissions;
 	# deploying code in production mode
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production 0 1;
 
@@ -30,6 +30,12 @@ composer:
 	rm -r vendor; \
 	composer.phar update --prefer-source; \
 	find vendor -type d -name ".git" | xargs rm -rf \;
+
+permissions:
+	# granting permissions
+	@-chmod -R 0777 $(shell pwd);
+	@-chmod -R 0777 $(shell pwd)/../cache;
+	@-chmod -R 0777 $(shell pwd)/../documents;
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Dependencies -----------------------------------------------------------------------------------------------

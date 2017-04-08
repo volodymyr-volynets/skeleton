@@ -23,7 +23,7 @@ class Error extends \Object\Controller {
 			if (empty($messages)) {
 				$messages[] = \I18n(null, 'Internal Server Error: 500');
 			}
-			$result.= \Html::message(['type' => 'danger', 'options' => $messages]);
+			$result.= \HTML::message(['type' => 'danger', 'options' => $messages]);
 		}
 		// show full description second
 		if (\Application::get('flag.error.show_full') && count(\Object\Error\Base::$errors) > 0) {
@@ -33,7 +33,7 @@ class Error extends \Object\Controller {
 				$result.= '<div>File: ' . $v['file'] . ', Line: ' . $v['line'] . '</div>';
 				$result.= '<br />';
 				// showing code only when we debug
-				if (debug::$debug) {
+				if (\Debug::$debug) {
 					$result.= '<div><pre>' . $v['code'] . '</pre></div>';
 					$result.= '<br />';
 					$result.= '<div><pre>' . implode("\n", $v['backtrace']) . '</pre></div>';
