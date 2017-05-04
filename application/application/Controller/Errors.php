@@ -1,7 +1,7 @@
 <?php
 
 namespace Controller;
-class Error extends \Object\Controller {
+class Errors extends \Object\Controller {
 
 	public $title = 'Error Handler';
 
@@ -21,9 +21,9 @@ class Error extends \Object\Controller {
 				}
 			}
 			if (empty($messages)) {
-				$messages[] = \I18n(null, 'Internal Server Error: 500');
+				$messages[] = \I18n(null, 'Internal Server Error') . ': ' . \I18n(null, 500);
 			}
-			$result.= \HTML::message(['type' => 'danger', 'options' => $messages]);
+			$result.= \Html::message(['type' => 'danger', 'options' => $messages]);
 		}
 		// show full description second
 		if (\Application::get('flag.error.show_full') && count(\Object\Error\Base::$errors) > 0) {
@@ -43,6 +43,6 @@ class Error extends \Object\Controller {
 		}
 		echo $result;
 		// clear our onload
-		Layout::$onload = '';
+		\Layout::$onload = '';
 	}
 }
