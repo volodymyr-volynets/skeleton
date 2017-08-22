@@ -1,6 +1,7 @@
 <?php
 
-class model_dispatch {
+namespace Helper;
+class Dispatch {
 	/**
 	 * This would be called before controller
 	 */
