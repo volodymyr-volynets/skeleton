@@ -1,6 +1,7 @@
 <?php
 
-class unit_tests_application extends PHPUnit_Framework_TestCase {
+namespace Miscellaneous\UnitTests;
+class Application extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * test application class initialization
