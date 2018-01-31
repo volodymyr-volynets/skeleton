@@ -23,7 +23,7 @@ class Errors extends \Object\Controller {
 			if (empty($messages)) {
 				$messages[] = \I18n(null, 'Internal Server Error') . ': ' . \I18n(null, 500);
 			}
-			$result.= \Html::message(['type' => 'danger', 'options' => $messages]);
+			$result.= \HTML::message(['type' => 'danger', 'options' => $messages]);
 		}
 		// show full description second
 		if (\Application::get('flag.error.show_full') && count(\Object\Error\Base::$errors) > 0) {
