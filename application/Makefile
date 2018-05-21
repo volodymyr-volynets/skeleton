@@ -143,12 +143,14 @@ help:
 	#   Development commands:
 	#	make development_test - run a test php script from command line
 	#	make development_symlink_framework - link to numbers framework repositories
+	#
 	#   Deployment commands:
 	#	make deployment_production - deploying code in production mode
 	#	make deployment_development - deploying code in development mode
 	#   Unit testing commands:
 	#	make unit_testing_application - test application
 	#	make unit_testing_submodules - test framework and submodules
+	#
 	#   Schema & migration commands:
 	#	make schema_test - test for changes between code and database
 	#	make schema_commit - commit changes from code to database
@@ -156,9 +158,10 @@ help:
 	#	make migration_code_test - test for changes between code and saved migrations
 	#	make migration_code_commit - commit changes from code to migrations
 	#	make migration_code_drop - drop migrations from the code
-	#	migration_db_test - test migration between code and database
-	#	migration_db_commit - commit changes from migrations to database
-	#	migration_db_rollback - rollback to particular migration
+	#	make migration_db_test - test migration between code and database
+	#	make migration_db_commit - commit changes from migrations to database
+	#	make migration_db_rollback - rollback to particular migration
+	#
 	#   Dependencies:
 	#	make dependency_test - testing dependencies in test mode
 	#	make dependency_commit - commit dependency changes
