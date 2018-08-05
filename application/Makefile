@@ -25,7 +25,7 @@ build:
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production 0 1;
 
 composer:
-	# running composer and the deleting submodules
+	# updating composer repositories
 	@-cd libraries; \
 	rm -r vendor; \
 	composer update --prefer-source; \
@@ -103,11 +103,11 @@ migration_db_rollback:
 # --------------------------------------------------------------------------------------------------------------------------------------------
 unit_testing_application:
 	@# test application
-	@-phpunit --debug --configuration application/overrides/unit_tests/application.xml
+	@-phpunit --debug --configuration ./application/Overrides/UnitTests/application.xml
 
 unit_testing_submodules:
 	@# test framework and submodules
-	@-phpunit --debug --configuration application/overrides/unit_tests/submodules.xml
+	@-phpunit --debug --configuration ./application/Overrides/UnitTests/submodules.xml
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Development commands -------------------------------------------------------------------------------------------------------------------
@@ -119,11 +119,11 @@ development_test:
 
 development_symlink_framework:
 	@# building dev symlinks, so we can commit changes right in proper git repository
-	@-for f in $(shell cd /home/numbers; ls); \
+	@-for f in $(shell cd /Development/numbers; ls); \
 	do \
 	    echo " -> $$f"; \
 	    rm -r libraries/vendor/Numbers/$$f ; \
-	    ln -s /home/numbers/$$f libraries/vendor/Numbers/$$f ; \
+	    ln -s /Development/numbers/$$f libraries/vendor/Numbers/$$f ; \
 	done;
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
@@ -143,14 +143,12 @@ help:
 	#   Development commands:
 	#	make development_test - run a test php script from command line
 	#	make development_symlink_framework - link to numbers framework repositories
-	#
 	#   Deployment commands:
 	#	make deployment_production - deploying code in production mode
 	#	make deployment_development - deploying code in development mode
 	#   Unit testing commands:
 	#	make unit_testing_application - test application
 	#	make unit_testing_submodules - test framework and submodules
-	#
 	#   Schema & migration commands:
 	#	make schema_test - test for changes between code and database
 	#	make schema_commit - commit changes from code to database
@@ -161,12 +159,15 @@ help:
 	#	make migration_db_test - test migration between code and database
 	#	make migration_db_commit - commit changes from migrations to database
 	#	make migration_db_rollback - rollback to particular migration
-	#
 	#   Dependencies:
 	#	make dependency_test - testing dependencies in test mode
 	#	make dependency_commit - commit dependency changes
 	#   Caches:
 	#	make cache_drop - reset caches
+	#   Other:
+	#	make build - building application
+	#	make composer - updating composer repositories
+	#	make permissions - granting permissions
 	#
 	#   Verbose:
 	#	Some commands support verbose mode that would provide additional information, to enable - add "verbose=1" after make.
