@@ -42,11 +42,11 @@ permissions:
 # ----------------------------------------------------------------------------------------------------------------
 dependency_test:
 	@# testing dependencies in test mode
-	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency test $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency test 0;
 
 dependency_commit:
 	@# commit dependency changes
-	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit $(verbose);
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit 0 2;
 
 # ----------------------------------------------------------------------------------------------------------------
 # --- Deployment commands ----------------------------------------------------------------------------------------
