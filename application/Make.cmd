@@ -34,10 +34,10 @@ REM ----------------------------------------------------------------------------
 REM --- Dependencies -----------------------------------------------------------------------------------------------
 REM ----------------------------------------------------------------------------------------------------------------
 IF "%command%"=="dependency_test" (
-	call php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency test "%verbose%"
+	call php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency test 0
 )
 IF "%command%"=="dependency_commit" (
-	call php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit "%verbose%"
+	call php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit 0 2
 )
 
 REM ----------------------------------------------------------------------------------------------------------------
@@ -127,10 +127,6 @@ REM	echo		make development_symlink_framework - link to numbers framework reposit
 	echo "		make dependency_commit - commit dependency changes"
 	echo "  Caches:"
 	echo "		make cache_drop - reset caches"
-	echo "  Other:"
-	echo "		make build - building application"
-	echo "		make composer - updating composer repositories"
-	echo "		make permissions - granting permissions"
 	echo "  Verbose:"
 	echo "		Some commands support verbose mode that would provide additional information, to enable - add "verbose=1" after make."
 	echo "		For example: make verbose=1 schema_test"
