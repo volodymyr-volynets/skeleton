@@ -115,15 +115,15 @@ unit_testing_submodules:
 development_test:
 	@# use this if you need to develop a test php script and run it from command line
 	@# replace it to run your custom script and use test.php as a template
-	@-php libraries/vendor/Numbers/Framework/System/Managers/test.php;
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Test.php;
 
 development_symlink_framework:
 	@# building dev symlinks, so we can commit changes right in proper git repository
-	@-for f in $(shell cd /Development/numbers; ls); \
+	@-for f in $(shell cd /Development/numbers-vendor; ls); \
 	do \
 	    echo " -> $$f"; \
 	    rm -r libraries/vendor/Numbers/$$f ; \
-	    ln -s /Development/numbers/$$f libraries/vendor/Numbers/$$f ; \
+	    ln -s /Development/numbers-vendor/$$f libraries/vendor/Numbers/$$f ; \
 	done;
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
