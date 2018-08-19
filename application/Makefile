@@ -103,12 +103,12 @@ migration_db_rollback:
 # --------------------------------------------------------------------------------------------------------------------------------------------
 unit_testing_application:
 	@# test application
-	@-phpunit --debug --configuration ./application/Overrides/UnitTests/application.xml
+	@-phpunit --debug --stop-on-failure --configuration ./application/Overrides/UnitTests/application.xml
 
 unit_testing_submodules:
 	@# test framework and submodules
-	@-phpunit --debug --configuration ./application/Overrides/UnitTests/submodules.xml
-
+	@-phpunit --debug --stop-on-failure --configuration ./application/Overrides/UnitTests/submodules.xml
+2
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Development commands -------------------------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------------------------------------------------
