@@ -25,6 +25,8 @@ build:
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php deployment production 0 1;
 
 composer:
+	# process dependencies
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php dependency commit 0 1;
 	# updating composer repositories
 	@-cd libraries; \
 	rm -r vendor; \
