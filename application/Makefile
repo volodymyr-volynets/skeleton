@@ -100,6 +100,10 @@ migration_db_rollback:
 	@# rollback to particular migration
 	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php migration_db rollback $(verbose);
 
+data_import:
+	@# import data from model
+	@-php libraries/vendor/Numbers/Framework/System/Managers/Manager.php data_import commit $(verbose);
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # --- Unit testing commands ------------------------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------------------------------------------------
@@ -143,35 +147,36 @@ help:
 	#
 	# Available commands:
 	#   Development commands:
-	#	make development_test - run a test php script from command line
-	#	make development_symlink_framework - link to numbers framework repositories
+	#		make development_test - run a test php script from command line
+	#		make development_symlink_framework - link to numbers framework repositories
 	#   Deployment commands:
-	#	make deployment_production - deploying code in production mode
-	#	make deployment_development - deploying code in development mode
+	#		make deployment_production - deploying code in production mode
+	#		make deployment_development - deploying code in development mode
 	#   Unit testing commands:
-	#	make unit_testing_application - test application
-	#	make unit_testing_submodules - test framework and submodules
+	#		make unit_testing_application - test application
+	#		make unit_testing_submodules - test framework and submodules
 	#   Schema & migration commands:
-	#	make schema_test - test for changes between code and database
-	#	make schema_commit - commit changes from code to database
-	#	make schema_drop - drop schema in database (empty database)
-	#	make migration_code_test - test for changes between code and saved migrations
-	#	make migration_code_commit - commit changes from code to migrations
-	#	make migration_code_drop - drop migrations from the code
-	#	make migration_db_test - test migration between code and database
-	#	make migration_db_commit - commit changes from migrations to database
-	#	make migration_db_rollback - rollback to particular migration
+	#		make schema_test - test for changes between code and database
+	#		make schema_commit - commit changes from code to database
+	#		make schema_drop - drop schema in database (empty database)
+	#		make migration_code_test - test for changes between code and saved migrations
+	#		make migration_code_commit - commit changes from code to migrations
+	#		make migration_code_drop - drop migrations from the code
+	#		make migration_db_test - test migration between code and database
+	#		make migration_db_commit - commit changes from migrations to database
+	#		make migration_db_rollback - rollback to particular migration
+	#		make data_import - import data from model
 	#   Dependencies:
-	#	make dependency_test - testing dependencies in test mode
-	#	make dependency_commit - commit dependency changes
+	#		make dependency_test - testing dependencies in test mode
+	#		make dependency_commit - commit dependency changes
 	#   Caches:
-	#	make cache_drop - reset caches
+	#		make cache_drop - reset caches
 	#   Other:
-	#	make build - building application
-	#	make composer - updating composer repositories
-	#	make permissions - granting permissions
+	#		make build - building application
+	#		make composer - updating composer repositories
+	#		make permissions - granting permissions
 	#
 	#   Verbose:
-	#	Some commands support verbose mode that would provide additional information, to enable - add "verbose=1" after make.
-	#	For example: make verbose=1 schema_test
+	#		Some commands support verbose mode that would provide additional information, to enable - add "verbose=1" after make.
+	#		For example: make verbose=1 schema_test
 	#
