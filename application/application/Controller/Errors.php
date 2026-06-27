@@ -9,64 +9,98 @@ class Errors extends \Object\Controller {
 	 * Error action
 	 */
 	public function actionError() {
-		$result = '';
+		// if we already rendered and have extra errors we would need to review logs for that
+		if (\Application::get('flag.global.__already_rendered')) {
+			return;
+		}
+		$messages = [];
+		$all_messages = [];
+		$http_status_code = null;
 		// show human readable messages first
 		if (count(\Object\Error\Base::$errors) > 0) {
-			$messages = [];
-			$all_messages = [];
 			// throw error in json format if ajax is set
-			if (\Application::get('flag.global.__ajax') || \Application::get('flag.global.__accept') == 'application/json') {
+			if (\Application::get('flag.global.__ajax') || \Application::get('flag.global.__is_api')) {
+				$http_status_code = null;
 				foreach (\Object\Error\Base::$errors as $k => $v) {
+					if (isset(\Helper\Constant\HTTPConstants::STATUSES[$v['errno']])) {
+						$http_status_code = $v['errno'];
+					}
 					foreach ($v['error'] as $v2) {
-						$messages[] = i18n(null, $v2);
+						$messages[] = $v2;
+						if (\Debug::$debug) {
+							$messages[] = 'Location: ' . $v['file'] . ':' . $v['line'];
+						}
 					}
 				}
-				\Layout::renderAs([
+				// render through response object
+				\Helper\HTTPResponse::output($http_status_code ?? \Helper\Constant\HTTPConstants::Status500InternalServerError, 'application/json', [
 					'success' => false,
-					'error' => strip_tags2($messages)
-				], 'application/json');
+					'error' => $messages,
+					'http_status_code' => $http_status_code ?? 419,
+				]);
+				return;
 			}
 			// render html
 			foreach (\Object\Error\Base::$errors as $v) {
-				if ($v['errno'] == -1) {
+				if ($v['errno'] == -1 || isset(\Helper\Constant\HTTPConstants::STATUSES[$v['errno']])) {
 					foreach ($v['error'] as $v2) {
-						$messages[] = i18n(null, $v2);
+						$messages[] = $v2;
 					}
+				}
+				if (isset(\Helper\Constant\HTTPConstants::STATUSES[$v['errno']])) {
+					$http_status_code = $v['errno'];
 				}
 				foreach ($v['error'] as $v2) {
 					$all_messages[] = $v2;
 				}
 			}
 			if (empty($messages)) {
-				$messages[] = i18n(null, 'Internal Server Error') . ': ' . i18n(null, 500);
+				$messages[] = loc('NF.Status.InternalServerError', 'Internal Server Error') . ': ' . \Format::id(500);
 			}
 			if (empty($all_messages)) {
-				$all_messages[] = 'Internal Server Error';
+				$all_messages[] = loc('NF.Status.InternalServerError', 'Internal Server Error') . ': ' . \Format::id(500);
 			}
-			$result.= \HTML::message(['type' => 'danger', 'options' => $messages]);
 			// add data to firewall
 			$firewalls = \Object\ACL\Resources::getStatic('firewalls', 'primary');
 			if (!empty($firewalls)) {
 				call_user_func_array($firewalls['method'], [\Request::ip(), $all_messages]);
 			}
 		}
-		// show full description second
-		if (\Application::get('flag.error.show_full') && count(\Object\Error\Base::$errors) > 0) {
-			foreach (\Object\Error\Base::$errors as $k => $v) {
-				$result.= '<h3>' . \Object\Error\Base::$error_codes[$v['errno']] . ' (' . $v['errno'] . '): <ul><li>' . implode('</li><li>', $v['error']) . '</li></ul></h3>';
-				$result.= '<br />';
-				$result.= '<div>File: ' . $v['file'] . ', Line: ' . $v['line'] . '</div>';
-				$result.= '<br />';
-				// showing code only when we debug
-				if (\Debug::$debug) {
-					$result.= '<div><pre>' . $v['code'] . '</pre></div>';
-					$result.= '<br />';
-					$result.= '<div><pre>' . implode("\n", $v['backtrace']) . '</pre></div>';
-				}
-				$result.= '<hr />';
-			}
+		// default to 500 if not set
+		if (!$http_status_code) {
+			$http_status_code = \Helper\Constant\HTTPConstants::Status500InternalServerError;
 		}
-		echo $result;
+		// and we need to provide statu code decription first
+		array_unshift($messages, $http_status_code . ' - ' . \Helper\Constant\HTTPConstants::STATUSES[$http_status_code]['name']);
+		// render
+		http_response_code($http_status_code);
+		// errors
+		\Layout::addMessage($messages, DANGER);
+		// template
+		echo \Template::renderStatic(\Template::PHP, '/Numbers/Templates/Common/View/ErrorXXX.template.php', [
+			'errors' => \Application::get('flag.error.show_full') ? \Object\Error\Base::$errors : [],
+			'debug' => \Debug::$debug ?? false,
+			'iframe' => \Application::get('application.template.name') == 'iframe',
+		]);
+		// clear our onload
+		\Layout::$onload = "";
+		\Layout::onLoad("$('#preloader').hide();");
+	}
+
+	/**
+	 * Maintenance action
+	 */
+	public function actionMaintenance() {
+		// if we already rendered and have extra errors we would need to review logs for that
+		if (\Application::get('flag.global.__already_rendered')) {
+			return;
+		}
+		\Layout::addMessage(\Application::get('maintenance.message'), DANGER);
+		\Layout::setTemplateSettings(['default'], [
+			'menu' => 'no_menu',
+			'footer' => 'no_footer',
+			'title' => 'no_title'
+		]);
 		// clear our onload
 		\Layout::$onload = "";
 		\Layout::onLoad("$('#preloader').hide();");

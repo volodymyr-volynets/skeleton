@@ -1,5 +1,9 @@
 /application/Config/environment.ini
+/application/Config/maintenance.ini
 /public_html/cache/*
+/storage/cache/*
+/storage/documents/*
+/storage/logs/*
 
 !.gitkeep
 !.htaccess
